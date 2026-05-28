@@ -39,3 +39,7 @@ func ConnectMongo() (*Mongo, error) {
 		DB:     client.Database(dbName),
 	}, nil
 }
+
+func (m *Mongo) Close() error {
+	return m.Client.Disconnect(context.Background())
+}
