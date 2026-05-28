@@ -1,5 +1,5 @@
 {
-  "name": "shop-dashboard",
+  "name": "app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,14 +11,13 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.100.14",
-    "@tanstack/react-query-devtools": "^5.100.14",
-    "@tanstack/react-router": "^1.170.8",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.15.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@tanstack/router-plugin": "^1.168.11",
+    "@tanstack/eslint-plugin-query": "^5.100.14",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
