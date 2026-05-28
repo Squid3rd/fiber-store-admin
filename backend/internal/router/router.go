@@ -10,6 +10,7 @@ type Deps struct {
 	Health  *handler.HealthHandler
 }
 
+// s
 func Register(app *fiber.App, d Deps) {
 
 	api := app.Group("/api/v1")
