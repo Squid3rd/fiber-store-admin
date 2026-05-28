@@ -12,7 +12,7 @@ type Deps struct {
 
 func Register(app *fiber.App, d Deps) {
 
-	api := app.Group("/api")
+	api := app.Group("/api/v1")
 	api.Get("/health", d.Health.Check)
 	api.Get("/products", d.Product.FindAll)
 	api.Post("/products", d.Product.Create)

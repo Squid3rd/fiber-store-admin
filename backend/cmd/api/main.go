@@ -7,7 +7,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/swagger"
 	"github.com/joho/godotenv"
+	"github.com/squid3rd/fiber-store-admin/docs"
 	"github.com/squid3rd/fiber-store-admin/internal/db"
 	"github.com/squid3rd/fiber-store-admin/internal/handler"
 	"github.com/squid3rd/fiber-store-admin/internal/repository"
@@ -15,6 +17,10 @@ import (
 	"github.com/squid3rd/fiber-store-admin/internal/service"
 )
 
+// @title Fiber Store Admin API
+// @version 1.0
+// @description Fiber Store Admin API
+// @BasePath /api/v1
 func main() {
 	_ = godotenv.Load()
 
@@ -47,7 +53,7 @@ func main() {
 	)
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173",
+		AllowOrigins: "http://localhost:5173,http://localhost:3000,http://localhost:8080",
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
@@ -56,10 +62,14 @@ func main() {
 		Health:  healthHandler,
 	})
 
-	go func() {
-		if err := app.Listen(":" + os.Getenv("PORT")); err != nil {
-			log.Fatal(err)
-		}
-	}()
+	app.Get("/api/v1/*", swagger.HandlerDefault)
+	docs.SwaggerInfo.BasePath = "/api/v1"
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	if err := app.Listen(":" + port); err != nil {
+		log.Fatal(err)
+	}
 }

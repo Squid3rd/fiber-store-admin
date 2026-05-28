@@ -21,6 +21,16 @@ func NewProductHandler(service *service.ProductService) *ProductHandler {
 	return &ProductHandler{service: service}
 }
 
+// FindAll godoc
+// @Summary List products
+// @Description Paginated list of products
+// @Tags products
+// @Produce json
+// @Param page query int false "page number" default(1)
+// @Param limit query int false "page size" default(20)
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]string
+// @Router /products [get]
 func (h *ProductHandler) FindAll(c *fiber.Ctx) error {
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	limit, _ := strconv.Atoi(c.Query("limit", "20"))
@@ -42,6 +52,17 @@ func (h *ProductHandler) FindAll(c *fiber.Ctx) error {
 	})
 }
 
+// Create godoc
+// @Summary Create product
+// @Description Create a new product
+// @Tags products
+// @Accept json
+// @Produce json
+// @Param payload body model.CreateProductInput true "product payload"
+// @Success 200 {object} model.Product
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /products [post]
 func (h *ProductHandler) Create(c *fiber.Ctx) error {
 	var in model.CreateProductInput
 
