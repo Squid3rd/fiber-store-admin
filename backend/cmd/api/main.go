@@ -36,13 +36,15 @@ func main() {
 
 	// Repositories
 	productRepo := repository.NewProductRepo(mongo.DB.Collection("products"))
+	authRepo := repository.NewAuthRepo(mongo.DB.Collection("users"))
 
 	// Services
 	productService := service.NewProductService(productRepo)
-
+	authService := service.NewAuthService(authRepo)
 	// Handlers
 	productHandler := handler.NewProductHandler(productService)
 	healthHandler := handler.NewHealthHandler()
+	authHandler := handler.NewAuthHandler(authService)
 
 	// New
 	app := fiber.New(
@@ -60,6 +62,7 @@ func main() {
 	router.Register(app, router.Deps{
 		Product: productHandler,
 		Health:  healthHandler,
+		Auth:    authHandler,
 	})
 
 	app.Get("/api/v1/*", swagger.HandlerDefault)
